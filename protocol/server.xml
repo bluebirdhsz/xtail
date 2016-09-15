@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<protocol>
+		<!--加入服务器-->
+		<request name="join_xtail" desc="加入服务器" check="1" id="101">
+			<key name="auth_str" type="varchar" desc="验证字符串"/>
+		</request>
+		<!--加入结果-->
+		<response name="join_result" desc="加入结果" id="102">
+			<key name="status" type="unsigned int" desc="状态码（0表示成功）"/>
+			<key name="message" type="varchar" desc="消息码"/>
+		</response>
+	</protocol>
+	<protocol>
+		<!--ping-->
+		<request name="ping" desc="ping服务器（长连接使用）" id="103">
+			<key name="time" type="unsigned int" desc="时间"/>
+		</request>
+		<!--ping结果-->
+		<response name="ping_re" desc="ping返回" id="104">
+			<key name="status" type="unsigned int" desc="状态码（0表示成功）"/>
+			<key name="message" type="varchar" desc="消息码"/>
+		</response>
+	</protocol>
+	<protocol>
+		<!--推送数据-->
+		<request name="push_msg" desc="ping服务器（长连接使用）" id="103">
+			<key name="file_name" type="varchar" desc="文件名（文件是虚拟的）"/>
+			<key name="ip" type="unsigned int" desc="客户端IP地址"/>
+			<key name="msg_type" type="tinyint" desc="消息类型：1:一般消息 2：警告消息 3：错误消息"/>
+			<key name="msg" type="varchar" desc="消息体（内容不超过65535字节）"/>
+		</request>
+	</protocol>
+</root>
