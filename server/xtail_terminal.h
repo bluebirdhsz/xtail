@@ -5,8 +5,12 @@
 #ifndef XTAIL_XTAIL_TERMINAL_H
 #define XTAIL_XTAIL_TERMINAL_H
 #include "common.h"
+#define IP_LEN 16
+#define MAX_ACTION_LEN 256
+#define DECODE_DATA_BUF_LEN 40960
+
 /**
- * 打开终端监听
+ * terminal 初始化
  */
-int xtail_terminal_listen( const char *terminal_host, int terminal_port );
+int xtail_terminal_init( yile_ini_t *ini_obj, const char *section );
 #endif //XTAIL_XTAIL_TERMINAL_H

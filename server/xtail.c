@@ -75,26 +75,12 @@ int main( int argc, char *argv[] ){
 	if ( YILE_OK != xtail_main_event_set()){
 		return YILE_ERROR;
 	}
-	//内网监听事件初始化
-	const char *lan_bind_ip = yile_ini_get_string( section, "server_host", "127.0.0.1", &ini_obj );
-	int lan_ini_port = yile_ini_get_int( section, "server_port", -1, &ini_obj );
-	if ( -1 == lan_ini_port ){
-		fprintf(stderr, "Server port read failed!\n" );
+	//server初始化
+	if ( YILE_OK != xtail_server_init( &ini_obj, section ) ){
 		return YILE_ERROR;
 	}
-	//打开监听
-	if ( YILE_OK != xtail_server_listen( lan_bind_ip, lan_ini_port )){
-		return YILE_ERROR;
-	}
-	//terminal网络事件初始化
-	const char *terminal_bind_ip = yile_ini_get_string( section, "terminal_host", "0.0.0.0", &ini_obj );
-	int terminal_ini_port = yile_ini_get_int( section, "terminal_port", -1, &ini_obj );
-	if ( -1 == terminal_ini_port ){
-		fprintf(stderr, "Terminal port read failed!\n" );
-		return YILE_ERROR;
-	}
-	//打开监听
-	if ( YILE_OK != xtail_terminal_listen( terminal_bind_ip, terminal_ini_port )){
+	//terminal初始化
+	if ( YILE_OK != xtail_terminal_init( &ini_obj, section )){
 		return YILE_ERROR;
 	}
 	//初始化进程（暂时不支持多进程）

@@ -1,8 +1,11 @@
 define( function( require, exports, module ){
 	var newe = require( 'newe' );
+	var $ = require( 'jquery' );
+	var url = require( 'url' );
 
-	function websocket_client( host, port ){
-		this.host = 'ws://' + host + ':' + port;
+	function websocket_client( host, port, param ){
+		this.host = url.build_query_string( param, 'ws://' + host + ':' + port );
+		console.debug( 'connect to ' + this.host );
 		this.websocket = null;
 		this.eve_list = {};
 	}
@@ -118,9 +121,17 @@ define( function( require, exports, module ){
 		/**
 		 * 发送数据
 		 */
-		send: function( act, data ){
-			var send_str = '|' + act + '|' + data;
-			this.websocket.send( str_utf8_len( send_str ) + send_str );
+		send: function( action_name, data ){
+			if ( 'string' !== typeof action_name ){
+				$.error( '无法识别的action name' );
+			}
+			if ( -1 !== action_name.indexOf( '|' ) ){
+				$.error( 'action_name 不能包含“|”字符' );
+			}
+			if ( 'string' !== typeof data ){
+				data = String( data );
+			}
+			this.websocket.send( action_name + '|' + data );
 		},
 		/**
 		 * 关闭

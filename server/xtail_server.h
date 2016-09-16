@@ -7,9 +7,9 @@
 #include "common.h"
 
 /**
- * 打开内网监听
+ * server 初始化
  */
-int xtail_server_listen( const char *server_host, int server_port );
+int xtail_server_init( yile_ini_t *ini_obj, const char *section );
 
 /**
  * 主进程的epoll设置

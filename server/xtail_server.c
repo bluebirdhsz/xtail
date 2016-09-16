@@ -3,7 +3,6 @@
 //
 
 #include "xtail_server.h"
-
 /**
  * 局域网数据分析
  */
@@ -30,9 +29,27 @@ static int xtail_server_new_conn( yile_connection_t *tmp ){
 }
 
 /**
- * 打开内网监听
+ * 主进程的epoll设置
  */
-int xtail_server_listen( const char *server_host, int server_port ){
+int xtail_main_event_set(){
+	yile_event_conf_t server_event_conf = {0};
+	yile_epoll_conf_t server_epoll_conf;
+	server_epoll_conf.et_trigger = 1;
+	server_epoll_conf.max_event = 256;
+	yile_epoll_init( &server_epoll_conf, &server_event_conf );
+	return YILE_OK;
+}
+
+/**
+ * server 初始化
+ */
+int xtail_server_init( yile_ini_t *ini_obj, const char *section ){
+	const char *server_host = yile_ini_get_string( section, "server_host", "127.0.0.1", ini_obj );
+	int server_port = yile_ini_get_int( section, "server_port", -1, ini_obj );
+	if ( -1 == server_port ){
+		fprintf(stderr, "Server port read failed!\n" );
+		return YILE_ERROR;
+	}
 	//局域网
 	yile_connection_t *server_listen_fd = yile_listen_fd( server_host , server_port );
 	if ( NULL == server_listen_fd ){
@@ -44,15 +61,4 @@ int xtail_server_listen( const char *server_host, int server_port ){
 	//设置事件
 	yile_connection_set_action( server_listen_fd , &server_listen_handle );
 	return YILE_OK;
-}
-
-/**
- * 主进程的epoll设置
- */
-int xtail_main_event_set(){
-	yile_event_conf_t server_event_conf = {0};
-	yile_epoll_conf_t server_epoll_conf;
-	server_epoll_conf.et_trigger = 1;
-	server_epoll_conf.max_event = 256;
-	yile_epoll_init( &server_epoll_conf, &server_event_conf );
 }
