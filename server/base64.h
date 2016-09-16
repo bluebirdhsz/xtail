@@ -1,6 +1,6 @@
 #ifndef BASE64_H
 #define BASE64_H
 #include "yile.h"
-extern void php_base64_encode(const unsigned char *, int, int *);
+void base64_encode( const unsigned char *str, int length, unsigned char *result );
 
 #endif /* BASE64_H */

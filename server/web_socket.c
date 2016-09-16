@@ -3,7 +3,6 @@
 //
 
 #include "web_socket.h"
-#include "base64.h"
 #include "sha1.h"
 
 /**
