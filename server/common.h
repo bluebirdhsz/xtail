@@ -12,8 +12,6 @@
 #include "yile_process.h"
 #include "yile_protocol.h"
 
-//最大数据包
-#define YILE_ROUTE_PACK_MAX_SIZE 0xA00000
 //子进程个数
 extern int xtail_process_num;
 #endif //XTAIL_COMMON_H

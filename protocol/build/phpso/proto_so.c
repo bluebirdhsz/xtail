@@ -45,7 +45,7 @@ void sowrite_push_msg( yile_buf_t *pack_result, HashTable *data_hash )
 	packet_info.pack_id = 103;
 	yile_buf_write( pack_result, NULL, sizeof( packet_head_t ) );
 	uint32_t tmp_var_uint32_t;
-	read_int_from_hash_var( proto_so_push_msg, tmp_var_uint32_t, ip );
+	read_int_from_hash_var( proto_so_push_msg, tmp_var_uint32_t, group_id );
 	yile_buf_write( pack_result, &tmp_var_uint32_t, sizeof( tmp_var_uint32_t ) );
 	int8_t tmp_var_int8_t;
 	read_int_from_hash_var( proto_so_push_msg, tmp_var_int8_t, msg_type );

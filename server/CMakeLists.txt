@@ -8,7 +8,7 @@ set(SOURCE_FILES
         xtail_terminal.c xtail_terminal.h
         protocol/proto.c protocol/proto.h
         web_socket.c web_socket.h
-        base64.c base64.h sha1.c sha1.h utils.c utils.h terminal_group.c terminal_group.h)
+        base64.c base64.h sha1.c sha1.h utils.c utils.h terminal_group.c terminal_group.h server_action.c server_action.h)
 INCLUDE_DIRECTORIES(
         yile
         yile/yile_log/include

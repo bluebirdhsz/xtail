@@ -95,7 +95,7 @@ proto_push_msg_t *read_push_msg( yile_buf_t *byte_pack, protocol_pool_t *result_
 			return re_struct;
 		}
 	}
-	re_struct->ip = yile_protocol_read_uint( byte_pack );
+	re_struct->group_id = yile_protocol_read_uint( byte_pack );
 	re_struct->msg_type = yile_protocol_read_byte( byte_pack );
 	re_struct->host_name = yile_protocol_read_string( byte_pack, result_pool );
 	re_struct->msg = yile_protocol_read_bin( byte_pack, NULL, result_pool );
@@ -197,8 +197,8 @@ void print_push_msg( proto_push_msg_t *re )
 	printf( "%s(\n", prefix_char );
 	printf( "    %s[host_name] = > ", prefix_char );
 	printf( "%s\n", re->host_name );
-	printf( "    %s[ip] = > ", prefix_char );
-	printf( "%u\n", re->ip );
+	printf( "    %s[group_id] = > ", prefix_char );
+	printf( "%u\n", re->group_id );
 	printf( "    %s[msg_type] = > ", prefix_char );
 	printf( "%d\n", re->msg_type );
 	printf( "    %s[msg] = > ", prefix_char );

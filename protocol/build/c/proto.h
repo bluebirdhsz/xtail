@@ -46,8 +46,8 @@ struct proto_push_msg_t{
 	char*												host_name;
 	/** 字节序（支持0xFFFFFFFF长度） */
 	yile_protocol_byte_t*								msg;
-	/** 客户端IP地址 */
-	uint32_t											ip;
+	/** 分组Id */
+	uint32_t											group_id;
 	/** 消息类型：1:一般消息 2：警告消息 3：错误消息 */
 	int8_t												msg_type;
 };

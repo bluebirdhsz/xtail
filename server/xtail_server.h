@@ -4,6 +4,7 @@
 
 #ifndef XTAIL_XTAIL_SERVER_H
 #define XTAIL_XTAIL_SERVER_H
+#define PACK_RESULT_BUF 4096
 #include "common.h"
 
 /**
