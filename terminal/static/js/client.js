@@ -86,37 +86,7 @@ define( function( require, exports, module ){
 		 * 收到消息
 		 */
 		read_data: function( data ){
-			//读数据体
-			if ( this.read_body ){
-				this.body_data += data;
-				var data_len = str_utf8_len( data );
-				if ( data_len === this.need_read ){
-					this.read_body = false;
-					this.trigger( 'data', { head: this.head_str, body: this.body_data } );
-				}
-				else {
-					this.need_read -= data_len;
-				}
-			}
-			//读数据头
-			else {
-				this.body_data = '';
-				var pos = data.indexOf( '|' );
-				if ( -1 === pos ){
-					this.close();
-				}
-				this.head_str = data.substring( 0, pos );
-				data = data.substring( pos + 1 );
-				pos = data.indexOf( '|' );
-				if ( -1 === pos ){
-					this.close();
-				}
-				var size = parseInt( data.substring( 0, pos ) );
-				data = data.substring( pos + 1 );
-				this.need_read = size;
-				this.read_body = true;
-				this.read_data( data );
-			}
+			console.debug( '收到消息('+ data.length +')：'+  data );
 		},
 		/**
 		 * 发送数据
@@ -131,7 +101,9 @@ define( function( require, exports, module ){
 			if ( 'string' !== typeof data ){
 				data = String( data );
 			}
-			this.websocket.send( action_name + '|' + data );
+			var send_str = action_name + '|' + data;
+			console.debug( "send:("+ send_str.length +")" + send_str );
+			this.websocket.send( send_str );
 		},
 		/**
 		 * 关闭

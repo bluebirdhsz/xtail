@@ -6,8 +6,8 @@
 #define XTAIL_XTAIL_TERMINAL_H
 #include "common.h"
 #define IP_LEN 16
-#define MAX_ACTION_LEN 256
-#define DECODE_DATA_BUF_LEN 40960
+#define DECODE_DATA_BUF_LEN 1024 * 4
+#define RESPONSE_DATA_BUF_LEN 8192
 
 /**
  * terminal 初始化

@@ -29,4 +29,8 @@ int websocket_handshake( yile_connection_t *fd_info );
  * 根据websocket的协议解出数据
  */
 websocket_result_code websocket_data_decode( yile_buf_t *read_buf, char *result, int64_t max_len, int64_t *data_len );
+/**
+ * 打包数据
+ */
+void websocket_encode_data( yile_buf_t *result, char *send_data, size_t send_len );
 #endif //XCONSOLE_WEB_SOCKET_H

@@ -4,6 +4,7 @@
 
 #include "utils.h"
 #include "string.h"
+
 /**
  * 从字符串中找到某一段
  * 返回NULL表示没有找到或者字符串太长了，其它情况返回字符串指针
@@ -22,7 +23,7 @@ char *str_search( char *str, char *beg_str, char *end_str, char *result, int res
 	tmp_result += strlen( beg_str );
 	char *end_char;
 	//没有指定end_str 或者 不存在end-str
-	if ( NULL == end_str || !( end_char = strstr( tmp_result, end_str ) ) ){
+	if ( NULL == end_str || !(end_char = strstr( tmp_result, end_str ))){
 		//字符串长度超过 result 接受范围
 		if ( strlen( tmp_result ) >= result_len ){
 			return NULL;
@@ -30,7 +31,7 @@ char *str_search( char *str, char *beg_str, char *end_str, char *result, int res
 		strcpy( result, tmp_result );
 		return result;
 	}
-	size_t len = (size_t)( end_char - tmp_result );
+	size_t len = (size_t)(end_char - tmp_result);
 	//超过范围
 	if ( len >= result_len ){
 		return NULL;
@@ -38,4 +39,13 @@ char *str_search( char *str, char *beg_str, char *end_str, char *result, int res
 	memcpy( result, tmp_result, len );
 	result[ len ] = '\0';
 	return result;
+}
+
+/**
+ * 64位无符号网络字节序 与 机器字节序互换
+ */
+uint64_t net_byteswap64( uint64_t x ){
+	uint64_t u = ntohl( x & 0xffffffffllu );
+	uint64_t l = ntohl( x >> 32 );
+	return (u << 32) | l;
 }

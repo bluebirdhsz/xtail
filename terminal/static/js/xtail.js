@@ -10,7 +10,7 @@ define( function( require ){
 	var client = new websocket_client( config.host, config.port, param );
 	client.on( 'open', function(){
 		console.debug( 'connect success' );
-		client.send( 'ping', 'this is test string' );
+		client.send( 'ping', 'ping' );
 	} );
 	client.open();
 	console.debug( 'run' );

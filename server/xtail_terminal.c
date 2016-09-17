@@ -25,7 +25,16 @@ int xtail_terminal_action_dispatch( yile_connection_t *fd_info, char *data ){
 	if ( 0 != strcmp( action_name, "ping" ) ){
 		return YILE_ERROR;
 	}
-	printf( "data:%s\n", data_body );
+	//生成一个栈内response buf
+	char response_data[ RESPONSE_DATA_BUF_LEN ];
+	yile_buf_t response = {0};
+	response.is_stack = response.is_data_stack = 1;
+	response.max_pos = RESPONSE_DATA_BUF_LEN;
+	response.data = response_data;
+	websocket_encode_data( &response, data_body, strlen( data_body ) );
+	yile_connection_send_buf( fd_info, response );
+	//如果buf没有重新分配过内存，不会触发free的
+	yile_buf_free( &response );
 	return YILE_OK;
 }
 
@@ -72,7 +81,6 @@ static int xtail_terminal_request( yile_connection_t *fd_info ){
 	//没有ext_data 表示还没有正式加入
 	if ( NULL == fd_info->ext_data ){
 		new_websocket_accept( fd_info );
-
 	}
 	else{
 		yile_buf_t *buf = fd_info->read_buf;
@@ -87,6 +95,7 @@ static int xtail_terminal_request( yile_connection_t *fd_info ){
 			}
 			//等待下次数据到达
 			if ( DATA_AGAIN == ret ){
+				printf( "Data again" );
 				break;
 			}
 			if ( YILE_ERROR == xtail_terminal_action_dispatch( fd_info, result_buf ) ){
