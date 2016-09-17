@@ -89,7 +89,6 @@ static int xtail_terminal_request( yile_connection_t *fd_info ){
 			if ( DATA_AGAIN == ret ){
 				break;
 			}
-			result_buf[ data_len ] = '\0';
 			if ( YILE_ERROR == xtail_terminal_action_dispatch( fd_info, result_buf ) ){
 				yile_connection_close( fd_info );
 				break;

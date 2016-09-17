@@ -139,7 +139,7 @@ int websocket_handshake( yile_connection_t *fd_info ){
      +---------------------------------------------------------------+
  */
 websocket_result_code websocket_data_decode( yile_buf_t *read_buf, char *result, int64_t max_len, int64_t *data_len ){
-	char *read_data = read_buf->data;
+	char *read_data = &read_buf->data[ read_buf->read_pos ];
 	//可用的数据量(处理粘包，至于websocket是否要处理粘包、断包，网上暂时没找到答案)
 	int available_len = read_buf->write_pos - read_buf->read_pos;
 	//第一个字符
@@ -176,7 +176,7 @@ websocket_result_code websocket_data_decode( yile_buf_t *read_buf, char *result,
 		if ( available_len < 8 ){
 			return DATA_AGAIN;
 		}
-		memcpy( &body_len, &read_data[ 2 ], 4 );
+		memcpy( &body_len, &read_data[ 2 ], 8 );
 		available_len -= 8;
 		read_len += 8;
 	}
@@ -193,10 +193,13 @@ websocket_result_code websocket_data_decode( yile_buf_t *read_buf, char *result,
 	read_len += 4;
 	read_buf->read_pos += read_len + body_len;
 	//跳到数据体开始位置
-	read_data += 4;
+	read_data += read_len;
 	int i;
 	for ( i = 0; i < body_len; i++ ){
 		read_data[ i ] ^= mask_key[ i % 4 ];
 	}
+	memcpy( result, read_data, (size_t)body_len );
+	result[ body_len ] = '\n';
+	printf( "receive data: %s\n\n", result );
 	return SUCCESS;
 }
