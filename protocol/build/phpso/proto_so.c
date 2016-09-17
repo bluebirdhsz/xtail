@@ -72,7 +72,7 @@ void soread_join_result( yile_buf_t *byte_pack, zval *result_arr )
 }
 /** 解析 ping结果
  */
-void soread_ping_re( yile_buf_t *byte_pack, zval *result_arr )
+void soread_pong( yile_buf_t *byte_pack, zval *result_arr )
 {
 	uint32_t tmp_var_uint32_t;
 	tmp_var_uint32_t = yile_protocol_read_uint( byte_pack );

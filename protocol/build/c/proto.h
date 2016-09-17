@@ -9,7 +9,7 @@ extern "C" {
 
 typedef struct proto_join_result_t proto_join_result_t;
 
-typedef struct proto_ping_re_t proto_ping_re_t;
+typedef struct proto_pong_t proto_pong_t;
 
 typedef struct proto_join_xtail_t proto_join_xtail_t;
 
@@ -24,7 +24,7 @@ struct proto_join_result_t{
 	uint32_t											status;
 };
 //ping结果
-struct proto_ping_re_t{
+struct proto_pong_t{
 	/** 消息码 */
 	char*												message;
 	/** 状态码（0表示成功） */
@@ -60,7 +60,7 @@ void write_join_result( yile_buf_t *pack_result, proto_join_result_t *data_arr )
 /**
  * 生成 ping结果
  */
-void write_ping_re( yile_buf_t *pack_result, proto_ping_re_t *data_arr );
+void write_pong( yile_buf_t *pack_result, proto_pong_t *data_arr );
 
 /**
  * 解析 加入服务器

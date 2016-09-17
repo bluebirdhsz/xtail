@@ -9,6 +9,6 @@
 #define add_proto_map_unpack_func()																	\
 {																									\
 	add_proto_unpack_map( 102, soread_join_result );												\
-	add_proto_unpack_map( 104, soread_ping_re );													\
+	add_proto_unpack_map( 104, soread_pong );														\
 }
 #endif

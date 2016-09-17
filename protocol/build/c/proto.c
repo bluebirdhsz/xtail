@@ -18,7 +18,7 @@ void write_join_result( yile_buf_t *pack_result, proto_join_result_t *data_arr )
 /**
  * 生成 ping结果
  */
-void write_ping_re( yile_buf_t *pack_result, proto_ping_re_t *data_arr )
+void write_pong( yile_buf_t *pack_result, proto_pong_t *data_arr )
 {
 	pack_result->write_pos = 0;
 	packet_head_t packet_info;

@@ -8,7 +8,7 @@
 
 typedef struct proto_so_join_result_t proto_so_join_result_t;
 
-typedef struct proto_so_ping_re_t proto_so_ping_re_t;
+typedef struct proto_so_pong_t proto_so_pong_t;
 
 typedef struct proto_so_join_xtail_t proto_so_join_xtail_t;
 
@@ -23,7 +23,7 @@ struct proto_so_join_result_t{
 	uint32_t											status;
 };
 //ping结果
-struct proto_so_ping_re_t{
+struct proto_so_pong_t{
 	/** 消息码 */
 	char*												message;
 	/** 状态码（0表示成功） */
@@ -68,5 +68,5 @@ void sowrite_push_msg( yile_buf_t *pack_result, HashTable *data_hash );
 void soread_join_result( yile_buf_t *byte_pack, zval *result_arr );
 /** 解析 ping结果
  */
-void soread_ping_re( yile_buf_t *byte_pack, zval *result_arr );
+void soread_pong( yile_buf_t *byte_pack, zval *result_arr );
 #endif

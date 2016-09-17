@@ -53,7 +53,7 @@ function php_unpack_join_result( $bin_str )
 /**
  * 解包数据 ping结果
  */
-function php_unpack_ping_re( $bin_str )
+function php_unpack_pong( $bin_str )
 {
 	$unpack_pos = 0;
 	$result = unpack( "Lstatus/", substr( $bin_str, $unpack_pos ) );

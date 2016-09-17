@@ -17,7 +17,7 @@
 			<key name="time" type="unsigned int" desc="时间"/>
 		</request>
 		<!--ping结果-->
-		<response name="ping_re" desc="ping返回" id="104">
+		<response name="pong" desc="pong返回" id="104">
 			<key name="status" type="unsigned int" desc="状态码（0表示成功）"/>
 			<key name="message" type="varchar" desc="消息码"/>
 		</response>
