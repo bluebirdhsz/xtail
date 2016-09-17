@@ -50,8 +50,8 @@ void sowrite_push_msg( yile_buf_t *pack_result, HashTable *data_hash )
 	int8_t tmp_var_int8_t;
 	read_int_from_hash_var( proto_so_push_msg, tmp_var_int8_t, msg_type );
 	yile_buf_write( pack_result, &tmp_var_int8_t, sizeof( tmp_var_int8_t ) );
-	read_string_from_hash( proto_so_push_msg, file_name );
-	read_string_from_hash( proto_so_push_msg, msg );
+	read_string_from_hash( proto_so_push_msg, host_name );
+	read_bytes_from_hash( proto_so_push_msg, msg );
 	packet_info.size = pack_result->write_pos - sizeof( packet_head_t );
 	memcpy( pack_result->data, &packet_info, sizeof( packet_head_t ) );
 }

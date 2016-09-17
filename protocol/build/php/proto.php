@@ -31,9 +31,9 @@ function php_pack_ping( $data )
 function php_pack_push_msg( $data )
 {
 	$bin_str = '';
-	$vfile_name_len = strlen( $data[ "file_name" ] );
+	$vhost_name_len = strlen( $data[ "host_name" ] );
 	$vmsg_len = strlen( $data[ "msg" ] );
-	$bin_str .= pack( 'LcSa'.$vfile_name_len.'Sa'.$vmsg_len.'', $data[ "ip" ], $data[ "msg_type" ], $vfile_name_len, $data[ "file_name" ], $vmsg_len, $data[ "msg" ] );
+	$bin_str .= pack( 'LcSa'.$vhost_name_len.'La'.$vmsg_len.'', $data[ "ip" ], $data[ "msg_type" ], $vhost_name_len, $data[ "host_name" ], $vmsg_len, $data[ "msg" ] );
 	$head_str = pack( "LS", strlen( $bin_str ), 103 );
 	$bin_str = $head_str . $bin_str;
 	return $bin_str;

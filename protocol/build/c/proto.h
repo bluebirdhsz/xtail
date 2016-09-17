@@ -42,10 +42,10 @@ struct proto_ping_t{
 };
 //推送数据
 struct proto_push_msg_t{
-	/** 文件名（文件是虚拟的） */
-	char*												file_name;
-	/** 消息体（内容不超过65535字节） */
-	char*												msg;
+	/** 主机域名 */
+	char*												host_name;
+	/** 字节序（支持0xFFFFFFFF长度） */
+	yile_protocol_byte_t*								msg;
 	/** 客户端IP地址 */
 	uint32_t											ip;
 	/** 消息类型：1:一般消息 2：警告消息 3：错误消息 */

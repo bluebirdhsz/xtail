@@ -97,8 +97,8 @@ proto_push_msg_t *read_push_msg( yile_buf_t *byte_pack, protocol_pool_t *result_
 	}
 	re_struct->ip = yile_protocol_read_uint( byte_pack );
 	re_struct->msg_type = yile_protocol_read_byte( byte_pack );
-	re_struct->file_name = yile_protocol_read_string( byte_pack, result_pool );
-	re_struct->msg = yile_protocol_read_string( byte_pack, result_pool );
+	re_struct->host_name = yile_protocol_read_string( byte_pack, result_pool );
+	re_struct->msg = yile_protocol_read_bin( byte_pack, NULL, result_pool );
 	if ( byte_pack->error_code || result_pool->error_code )
 	{
 		return NULL;
@@ -141,9 +141,11 @@ uint32_t size_read_push_msg( yile_buf_t *byte_pack )
 	tmp_str_len = yile_protocol_read_ushort( byte_pack );
 	yile_protocol_size_check( byte_pack, tmp_str_len );
 	yile_protocol_premalloc( result_pool, tmp_str_len + 1 );
-	tmp_str_len = yile_protocol_read_ushort( byte_pack );
-	yile_protocol_size_check( byte_pack, tmp_str_len );
-	yile_protocol_premalloc( result_pool, tmp_str_len + 1 );
+	yile_protocol_byte_len_t tmp_bin_len;
+	yile_protocol_premalloc( result_pool, sizeof( yile_protocol_byte_t ) );
+	tmp_bin_len = yile_protocol_read_uint( byte_pack );
+	yile_protocol_size_check( byte_pack, tmp_bin_len );
+	yile_protocol_premalloc( result_pool, tmp_bin_len );
 	byte_pack->read_pos = old_byte_pack_size;
 	if ( result_pool->error_code || byte_pack->error_code )
 	{
@@ -193,14 +195,14 @@ void print_push_msg( proto_push_msg_t *re )
 	yile_printf_tab_string( prefix_char, rank );
 	printf( "push_msg\n" );
 	printf( "%s(\n", prefix_char );
-	printf( "    %s[file_name] = > ", prefix_char );
-	printf( "%s\n", re->file_name );
+	printf( "    %s[host_name] = > ", prefix_char );
+	printf( "%s\n", re->host_name );
 	printf( "    %s[ip] = > ", prefix_char );
 	printf( "%u\n", re->ip );
 	printf( "    %s[msg_type] = > ", prefix_char );
 	printf( "%d\n", re->msg_type );
 	printf( "    %s[msg] = > ", prefix_char );
-	printf( "%s\n", re->msg );
+	printf( "[Blob %d]\n", re->msg->len );
 	printf( "%s)\n", prefix_char );
 	}
 #endif

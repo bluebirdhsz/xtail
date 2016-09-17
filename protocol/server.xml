@@ -24,11 +24,11 @@
 	</protocol>
 	<protocol>
 		<!--推送数据-->
-		<request name="push_msg" desc="ping服务器（长连接使用）" id="103">
-			<key name="file_name" type="varchar" desc="文件名（文件是虚拟的）"/>
+		<request name="push_msg" desc="推送消息" id="103">
+			<key name="host_name" type="varchar" desc="主机域名"/>
 			<key name="ip" type="unsigned int" desc="客户端IP地址"/>
 			<key name="msg_type" type="tinyint" desc="消息类型：1:一般消息 2：警告消息 3：错误消息"/>
-			<key name="msg" type="varchar" desc="消息体（内容不超过65535字节）"/>
+			<key name="msg" type="byte" desc="字节序（支持0xFFFFFFFF长度）"/>
 		</request>
 	</protocol>
 </root>
