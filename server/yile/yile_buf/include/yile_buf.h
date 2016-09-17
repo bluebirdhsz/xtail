@@ -102,6 +102,11 @@ void *yile_buf_read( yile_buf_t *tmp, uint32_t size );
  * 初始化buf
  */
 int yile_buf_init( yile_buf_conf_t *buf_conf );
+
+/**
+ * 写入一个byte
+ */
+int yile_buf_write_byte( yile_buf_t *tmp, char data );
 #if defined __cplusplus
 }
 #endif
