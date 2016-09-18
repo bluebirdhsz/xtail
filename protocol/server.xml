@@ -2,22 +2,22 @@
 <root>
 	<protocol>
 		<!--加入服务器-->
-		<request name="join_xtail" desc="加入服务器" check="1" id="101" size="1024">
+		<request name="join_xtail" desc="加入服务器" check="1" id="101" size="1k">
 			<key name="auth_str" type="varchar" desc="验证字符串"/>
 		</request>
 		<!--加入结果-->
-		<response name="join_result" desc="加入结果" id="102" size="1024">
+		<response name="join_result" desc="加入结果" id="102" size="1k">
 			<key name="status" type="unsigned int" desc="状态码（0表示成功）"/>
 			<key name="message" type="varchar" desc="消息码"/>
 		</response>
 	</protocol>
 	<protocol>
 		<!--ping-->
-		<request name="ping" desc="ping服务器（长连接使用）" id="103" size="1024">
+		<request name="ping" desc="ping服务器（长连接使用）" id="103" size="1k">
 			<key name="time" type="unsigned int" desc="时间"/>
 		</request>
 		<!--ping结果-->
-		<response name="pong" desc="pong返回" id="104" size="1024">
+		<response name="pong" desc="pong返回" id="104" size="1k">
 			<key name="status" type="unsigned int" desc="状态码（0表示成功）"/>
 			<key name="message" type="varchar" desc="消息码"/>
 		</response>

@@ -1,11 +1,11 @@
 #ifndef PROTOCOL_POOL_SIZE_HEAD
 #define PROTOCOL_POOL_SIZE_HEAD
 //加入结果 解析时占内存
-#define PROTO_SIZE_JOIN_RESULT 16384
+#define PROTO_SIZE_JOIN_RESULT 1024
 //ping结果 解析时占内存
-#define PROTO_SIZE_PONG 16384
+#define PROTO_SIZE_PONG 1024
 //加入服务器 解析时占内存
-#define PROTO_SIZE_JOIN_XTAIL 16384
+#define PROTO_SIZE_JOIN_XTAIL 1024
 //ping 解析时占内存
 #define PROTO_SIZE_PING sizeof( proto_ping_t ) + sizeof( packet_head_t )
 //推送数据 解析时占内存
