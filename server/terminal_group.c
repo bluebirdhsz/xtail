@@ -2,6 +2,7 @@
 // Created by bluebird on 2016-9-16.
 //
 
+#include "proto.h"
 #include "terminal_group.h"
 
 //组hash map 以ip地址的网络字节顺序为hash key 因为是uint32的，直接mod性能非常高
@@ -300,4 +301,19 @@ void terminal_group_send_msg( uint32_t group_id, yile_buf_t *send_buf ){
 int terminal_group_kick_idle( yile_connection_t *timer_fd ){
 	//todo
 	return YILE_OK;
+}
+
+/**
+ * 将消息广播给组
+ */
+void terminal_group_push_msg( proto_push_msg_t *msg_pack ){
+	terminal_group_t *group_info = terminal_group_find( msg_pack->group_id );
+	//组不存在，创建组！
+	if ( NULL == group_info ){
+		group_info = terminal_group_new( msg_pack->group_id );
+		if ( NULL == group_info ){
+			return;
+		}
+	}
+	//todo
 }

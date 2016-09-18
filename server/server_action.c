@@ -6,6 +6,7 @@
 #include "server_action.h"
 #include "proto.h"
 #include "proto_def.h"
+#include "terminal_group.h"
 char *secret_key;
 /**
  * 客户端（非terminal）加入服务器
@@ -43,11 +44,11 @@ int action_push_msg( yile_connection_t *fd_info, yile_buf_t *read_buf ){
 	if ( need_size < PROTO_SIZE_PUSH_MSG ){
 		yile_protocol_pool_resize( &proto_result, need_size );
 	}
-	proto_push_msg_t *push_msg = read_push_msg( read_buf, &proto_result );
-	if ( NULL == push_msg ){
+	proto_push_msg_t *msg_pack = read_push_msg( read_buf, &proto_result );
+	if ( NULL == msg_pack ){
 		try_free_proto_pool( proto_result );
 		return YILE_ERROR;
 	}
-	//todo
+	terminal_group_push_msg( msg_pack );
 	return YILE_OK;
 }

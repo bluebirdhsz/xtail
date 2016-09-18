@@ -13,6 +13,9 @@
 typedef struct terminal_group_s terminal_group_t;
 //终端
 typedef struct terminal_client_s terminal_client_t;
+//消息包
+typedef struct terminal_msg_s terminal_msg_t;
+
 //小组
 struct terminal_group_s{
 	int								client_size;
@@ -29,6 +32,14 @@ struct terminal_client_s{
 	terminal_client_t				*next;
 };
 
+//消息包
+struct terminal_msg_s{
+	size_t 							msg_len; 	//消息长度
+	char							*msg;		//消息
+	terminal_msg_t					*next;
+};
+
+
 /**
  * 将一个终端加入IP组
  */
@@ -42,7 +53,7 @@ void terminal_group_remove_client( yile_connection_t *fd_info );
 /**
  * 将消息广播给组
  */
-void terminal_group_send_msg( uint32_t group_id, yile_buf_t *send_buf );
+void terminal_group_push_msg( proto_push_msg_t *msg_pack );
 
 /**
  * 踢出不活动的terminal client
