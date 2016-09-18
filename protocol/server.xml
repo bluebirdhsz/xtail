@@ -2,29 +2,29 @@
 <root>
 	<protocol>
 		<!--加入服务器-->
-		<request name="join_xtail" desc="加入服务器" check="1" id="101">
+		<request name="join_xtail" desc="加入服务器" check="1" id="101" size="1024">
 			<key name="auth_str" type="varchar" desc="验证字符串"/>
 		</request>
 		<!--加入结果-->
-		<response name="join_result" desc="加入结果" id="102">
+		<response name="join_result" desc="加入结果" id="102" size="1024">
 			<key name="status" type="unsigned int" desc="状态码（0表示成功）"/>
 			<key name="message" type="varchar" desc="消息码"/>
 		</response>
 	</protocol>
 	<protocol>
 		<!--ping-->
-		<request name="ping" desc="ping服务器（长连接使用）" id="103">
+		<request name="ping" desc="ping服务器（长连接使用）" id="103" size="1024">
 			<key name="time" type="unsigned int" desc="时间"/>
 		</request>
 		<!--ping结果-->
-		<response name="pong" desc="pong返回" id="104">
+		<response name="pong" desc="pong返回" id="104" size="1024">
 			<key name="status" type="unsigned int" desc="状态码（0表示成功）"/>
 			<key name="message" type="varchar" desc="消息码"/>
 		</response>
 	</protocol>
 	<protocol>
 		<!--推送数据-->
-		<request name="push_msg" desc="推送消息" id="103">
+		<request name="push_msg" desc="推送消息" id="103" size="runtime">
 			<key name="host_name" type="varchar" desc="主机域名"/>
 			<key name="group_id" type="unsigned int" desc="分组Id"/>
 			<key name="msg_type" type="tinyint" desc="消息类型：1:一般消息 2：警告消息 3：错误消息"/>

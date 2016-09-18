@@ -13,16 +13,19 @@ yile_connection_t *join_list = NULL;
 int xtail_server_action_dispatch( yile_connection_t *fd_info , yile_buf_t *read_buf , uint32_t hash_id ){
 	packet_head_t *pack_head = ( packet_head_t* )&read_buf->data[ 0 ];
 	printf( "server on_action: %d %u\n\n", pack_head->pack_id, pack_head->size );
-	yile_buf_stack_buf( proxy_data_pack, PACK_RESULT_BUF );
 	int result = 0;
 	//加入服务器
 	if ( PACK_ID_JOIN_XTAIL == pack_head->pack_id ){
+		yile_buf_stack_buf( proxy_data_pack, PACK_RESULT_BUF );
 		result = action_join_xtail( fd_info, read_buf, &proxy_data_pack );
 		if ( YILE_OK == result ){
 			yile_connection_send_buf( fd_info, proxy_data_pack );
 		}
+		yile_buf_free( &proxy_data_pack );
 	}
-	yile_buf_free( &proxy_data_pack );
+	else if ( PACK_ID_PUSH_MSG == pack_head->pack_id ){
+		result = action_push_msg( fd_info, read_buf );
+	}
 	if ( YILE_OK != result ){
 		yile_connection_close( fd_info );
 	}

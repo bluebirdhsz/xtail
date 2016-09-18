@@ -32,3 +32,22 @@ int action_join_xtail( yile_connection_t *fd_info, yile_buf_t *read_buf, yile_bu
 	try_free_proto_pool( proto_result );
 	return YILE_OK;
 }
+
+/**
+ * 推送消息
+ */
+int action_push_msg( yile_connection_t *fd_info, yile_buf_t *read_buf ){
+	read_buf->read_pos = sizeof( packet_head_t );
+	yile_protocol_stack_pool( proto_result, PROTO_SIZE_PUSH_MSG );
+	uint32_t need_size = size_read_push_msg( read_buf );
+	if ( need_size < PROTO_SIZE_PUSH_MSG ){
+		yile_protocol_pool_resize( &proto_result, need_size );
+	}
+	proto_push_msg_t *push_msg = read_push_msg( read_buf, &proto_result );
+	if ( NULL == push_msg ){
+		try_free_proto_pool( proto_result );
+		return YILE_ERROR;
+	}
+	//todo
+	return YILE_OK;
+}
