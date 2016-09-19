@@ -5,6 +5,8 @@
 #ifndef XCONSOLE_SERVER_ACTION_H
 #define XCONSOLE_SERVER_ACTION_H
 extern char *secret_key;
+
+#include "common.h"
 /**
  * 客户端（非terminal）加入服务器
  */

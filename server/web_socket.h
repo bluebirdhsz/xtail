@@ -33,4 +33,9 @@ websocket_result_code websocket_data_decode( yile_buf_t *read_buf, char *result,
  * 打包数据
  */
 void websocket_encode_data( yile_buf_t *result, char *send_data, size_t send_len );
+
+/**
+ * 打包head（只打包head部分，然后手动拼接数据体，麻烦一些，但是性能更高）
+ */
+void websocket_encode_head( char *head_buf, size_t *head_len, size_t send_len );
 #endif //XCONSOLE_WEB_SOCKET_H

@@ -226,14 +226,14 @@ websocket_result_code websocket_data_decode( yile_buf_t *read_buf, char *result,
  * 打包数据
  */
 void websocket_encode_data( yile_buf_t *result, char *send_data, size_t send_len ){
-	printf( "send data:%s len(%d) \n\n", send_data, send_len );
+	//printf( "send data:%s len(%d) \n\n", send_data, send_len );
 	//0x81表示是一个完整的文本数据包（以后再重构成支持多种数据类型的）
 	yile_buf_write_byte( result, (char)0x81 );
 	//返回的数据可以不加mask
 	char mask = 0;
 	//内容长度在0-125
 	if ( send_len < 126 ){
-		mask = (char)(send_len);
+		mask = (char)send_len;
 		yile_buf_write_byte( result, mask );
 	}
 	//内容长度小于65535
@@ -252,4 +252,36 @@ void websocket_encode_data( yile_buf_t *result, char *send_data, size_t send_len
 		yile_buf_write( result, &tmp_data_len, sizeof( tmp_data_len ) );
 	}
 	yile_buf_write( result, send_data, send_len );
+}
+
+/**
+ * 打包head（只打包head部分，然后手动拼接数据体，麻烦一些，但是性能更高）
+ */
+void websocket_encode_head( char *head_buf, size_t *head_len, size_t send_len ){
+	size_t total_len = 2;
+	head_buf[ 0 ] = (char)0x81;
+	if ( send_len < 126 ){
+		head_buf[ 1 ] = (char)send_len;
+	}
+	//内容长度小于65535
+	else if ( send_len <= 0xFFFF ){
+		head_buf[ 1 ] = 126;
+		uint16_t tmp_data_len = (uint16_t)send_len;
+		//这里要将 机器字节序转换成 网络字节序
+		tmp_data_len = htons( tmp_data_len );
+		head_buf += total_len;
+		memcpy( head_buf, &tmp_data_len, sizeof( tmp_data_len ) );
+		total_len += sizeof( tmp_data_len );
+	}
+	//内容长度大于65535
+	else{
+		head_buf[ 1 ] = 127;
+		uint64_t tmp_data_len = (uint64_t)send_len;
+		//这里要将 机器字节序转换成 网络字节序
+		tmp_data_len = hton64( tmp_data_len );
+		head_buf += total_len;
+		memcpy( head_buf, &tmp_data_len, sizeof( tmp_data_len ) );
+		total_len += sizeof( tmp_data_len );
+	}
+	*head_len = total_len;
 }

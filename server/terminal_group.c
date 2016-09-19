@@ -283,14 +283,15 @@ void terminal_group_remove_client( yile_connection_t *fd_info ){
 /**
  * 将消息广播给组
  */
-void terminal_group_send_msg( uint32_t group_id, yile_buf_t *send_buf ){
+void terminal_group_send_msg( uint32_t group_id, char *send_data, size_t send_len ){
+	printf( "group send:%u \n\n", group_id );
 	terminal_group_t *group_info = terminal_group_find( group_id );
 	if ( NULL == group_info ){
 		return;
 	}
 	terminal_client_t *member = group_info->client_list;
 	while ( NULL != member ){
-		yile_connection_send( member->fd_info, send_buf->data, send_buf->write_pos );
+		yile_connection_send( member->fd_info, send_data, send_len );
 		member = member->next;
 	}
 }
@@ -301,19 +302,4 @@ void terminal_group_send_msg( uint32_t group_id, yile_buf_t *send_buf ){
 int terminal_group_kick_idle( yile_connection_t *timer_fd ){
 	//todo
 	return YILE_OK;
-}
-
-/**
- * 将消息广播给组
- */
-void terminal_group_push_msg( proto_push_msg_t *msg_pack ){
-	terminal_group_t *group_info = terminal_group_find( msg_pack->group_id );
-	//组不存在，创建组！
-	if ( NULL == group_info ){
-		group_info = terminal_group_new( msg_pack->group_id );
-		if ( NULL == group_info ){
-			return;
-		}
-	}
-	//todo
 }
