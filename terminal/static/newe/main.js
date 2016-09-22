@@ -784,7 +784,7 @@ function get_server_time(){
  * @return boolean
  */
 function is_develop(){
-	return true === get_config( 'dev' );
+	return true === get_config( 'is_debug' );
 }
 /**
  * 修正服务器返回结果

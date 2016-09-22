@@ -1,0 +1,22 @@
+body{
+	font-family: '微软雅黑', serif;
+	font-size:14px;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	background-color: #eee;
+	color:#303030;
+}
+
+#xtail_head_div {
+	text-align: center;
+	max-width: 330px;
+	padding: 15px;
+	margin: 0 auto;
+	font-size:24px;
+}
+#xtail_head_div.error{
+	color:red;
+}
+#xtail_head_div.success{
+	color:green;
+}

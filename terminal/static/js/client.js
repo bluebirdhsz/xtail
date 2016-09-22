@@ -2,10 +2,8 @@ define( function( require, exports, module ){
 	var newe = require( 'newe' );
 	var $ = require( 'jquery' );
 	var url = require( 'url' );
-
 	function websocket_client( host, port, param ){
 		this.host = url.build_query_string( param, 'ws://' + host + ':' + port );
-		console.debug( 'connect to ' + this.host );
 		this.websocket = null;
 		this.eve_list = {};
 	}
@@ -33,7 +31,6 @@ define( function( require, exports, module ){
 		 * @type Boolean|Boolean|Boolean
 		 */
 		on_open: function(){
-			console.debug( "open" );
 			this.trigger( 'open' );
 		},
 		on: function( eve_name, callback ){
@@ -65,28 +62,19 @@ define( function( require, exports, module ){
 		 */
 		on_close: function(){
 			this.close( true );
-			console.warn( '连接断开' );
 			this.trigger( 'close' );
 		},
 		/**
 		 * 收到消息
 		 */
 		on_message: function( eve ){
-			this.read_data( eve.data );
+			this.trigger( eve.data );
 		},
 		/**
 		 * 出错
 		 */
 		on_error: function( eve ){
-			console.error( 'websocket 出错了' );
-			console.error( eve );
 			this.trigger( 'error' );
-		},
-		/**
-		 * 收到消息
-		 */
-		read_data: function( data ){
-			console.debug( '收到消息('+ data.length +')：'+  data );
 		},
 		/**
 		 * 发送数据
@@ -115,25 +103,4 @@ define( function( require, exports, module ){
 			this.websocket = null;
 		}
 	};
-	/**
-	 * utf8字符串长度
-	 */
-	function str_utf8_len( string ){
-		var str = '' + string;
-		var total_len = 0, i;
-		var charCode, len = str.length;
-		for ( i = 0; i < len; i++ ){
-			charCode = str.charCodeAt( i );
-			if ( charCode < 0x007f ){
-				total_len++;
-			}
-			else if ( charCode <= 0x07ff ){
-				total_len += 2;
-			}
-			else if ( charCode <= 0xffff ){
-				total_len += 3;
-			}
-		}
-		return total_len;
-	}
 } );

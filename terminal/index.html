@@ -2,18 +2,25 @@
 <html>
 <head>
 	<title>xtail terminal</title>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
 	<meta name="renderer" content="webkit">
 	<link rel="stylesheet" href="static/bootstrap/css/bootstrap.css"/>
+	<link rel="stylesheet" href="static/css/xtail.css"/>
 </head>
 <body>
-<div>
+<div class="container">
+	<div class="xtail_head" id="xtail_head_div">
+		正在加入xtail服务器...
+	</div>
 </div>
+
 <script type='text/javascript' src="static/newe/seajs/sea.js"></script>
 <script type='text/javascript' src="static/newe/main.js"></script>
 <script type='text/javascript' src="static/newe/seajs/seajs-css.js"></script>
 <script>
-	seajs.config({base:"/static/newe/",paths:{xtail:"/static/js"}});
+	set_config( 'host', '192.168.128.128' );
+	set_config( 'port', '8080' );
+	seajs.config( { base: "/static/newe/", paths: { xtail: "/static/js" } } );
 	seajs.use( 'xtail/xtail.js' );
 </script>
 </body>
